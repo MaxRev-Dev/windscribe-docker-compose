@@ -27,7 +27,8 @@ Also Windscribe **account is required**. The best solution is to buy a custom pl
 2. Rename `.env.dev` to `.env`
 3. Simply run docker-compose
     `docker-compose up -d --pull=always`
-    Or where --scale sets number of intances of specific service
+
+    If more resources are available you can scale services. Use --scale to set number of intances of a specific service
     `docker-compose up -d --pull=always --scale uashield=2 --scale nowarddos=2`
 
 ## Donations
