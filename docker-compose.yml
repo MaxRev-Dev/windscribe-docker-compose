@@ -1,0 +1,41 @@
+version: "3"
+services:
+  docker-windscribe:
+    image: wiorca/docker-windscribe
+    container_name: docker-windscribe
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Kiev
+      - WINDSCRIBE_USERNAME=${WINDSCRIBE_USERNAME}
+      - WINDSCRIBE_PASSWORD=${WINDSCRIBE_PASSWORD}
+      - WINDSCRIBE_PROTOCOL=udp
+      - WINDSCRIBE_PORT=443
+      - WINDSCRIBE_LOCATION=${WINDSCRIBE_LOCATION}
+      - WINDSCRIBE_LANBYPASS=on
+      - WINDSCRIBE_FIREWALL=on
+      - VPN_PORT=9999
+    volumes:
+      - config:/config
+    dns:
+      - 8.8.8.8
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped 
+
+  nowarddos:
+    depends_on: 
+      - docker-windscribe
+    restart: unless-stopped
+    network_mode: "service:docker-windscribe"
+    image: registry.gitlab.com/a_gonda/nowarddos:latest
+
+  uashield:
+    depends_on: 
+      - docker-windscribe
+    restart: unless-stopped
+    network_mode: "service:docker-windscribe"
+    image: ghcr.io/opengs/uashield:latest
+
+volumes:
+  config: {}
