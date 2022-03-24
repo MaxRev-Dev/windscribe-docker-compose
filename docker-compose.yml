@@ -28,7 +28,7 @@ services:
       - docker-windscribe
     restart: unless-stopped
     network_mode: "service:docker-windscribe"
-    image: registry.gitlab.com/a_gonda/nowarddos:latest
+    image: maxrev/nowarddos:latest
 
   uashield:
     depends_on: 
@@ -36,6 +36,20 @@ services:
     restart: unless-stopped
     network_mode: "service:docker-windscribe"
     image: ghcr.io/opengs/uashield:latest
+
+  db1000n:
+    depends_on: 
+      - docker-windscribe
+    restart: unless-stopped
+    network_mode: "service:docker-windscribe"
+    image: ghcr.io/arriven/db1000n:latest
+
+  db1000n-advanced:
+    depends_on: 
+      - docker-windscribe
+    restart: unless-stopped
+    network_mode: "service:docker-windscribe"
+    image: ghcr.io/arriven/db1000n-advanced:latest
 
 volumes:
   config: {}
